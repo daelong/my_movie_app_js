@@ -48,3 +48,13 @@ Food.propTypes = {
 }; 이런식으로 확인할 수 있음
 string, number는 type이 string이거나, number여야 한다는 것이고
 isRequired는 꼭 있어야한다는 것이다. 
+
+
+state는 보통 동적데이터와 함께 작업할 때 만들어진다.
+동적데이터는 props로 해결못함 그래서 필요한것이 state이다. 
+
+함수형(function) 컴포넌트 vs 클래스형 컴포넌트 
+함수형 컴포넌트보다 클래스형 컴포넌트를 쓰는 이유는 component의 data를 바꾸는게 유용해서이다.
+클래스형 컴포넌트가 state이다
+
+일단 state는 객체이다. 
