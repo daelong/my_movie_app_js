@@ -1,60 +1,52 @@
 import React from "react";
-import PropTypes from "prop-types";
+import axios from "axios";
+import Movie from "./Movie";
 
-function Food({ name, picture, rating }) {
-  // 굳이 js파일을 따로 만들지 않아도 이런식으로 함수로 만들어서 component를 사용할 수도 있음
-  return (
-    <div>
-      <h1>I like{name}</h1>
-      <h4>{rating}/5.0</h4>
-      <img src={picture} alt={name} />
-    </div>
-  );
-}
-
-Food.propTypes = {
-  name: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
-};
-
-const foodILike = [
-  {
-    id: 1,
-    name: "darkgarbi",
-    image:
-      "https://search.pstatic.net/common/?src=http%3A%2F%2Fpost.phinf.naver.net%2FMjAyMDA4MDVfMjU0%2FMDAxNTk2NjE4Mjg4NDA2.zvjFx2qHp_9UH-8G5E4laQQBemVSzkTUjEOXNZ22AX8g.9sYZGgIyZOAJsligbIqes-N3V9TTHjCmMMrsQN4eYxUg.JPEG%2FI1lQ5b47FAXQ4xP5xB08QwD7AlpU.jpg&type=sc960_832",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "hamburger",
-    image:
-      "https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F014%2F2011%2F06%2F05%2F110605_111105813.jpg&type=sc960_832",
-    rating: 4.9,
-  },
-  {
-    id: 3,
-    name: "gobchang",
-    image:
-      "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxODA1MTdfMjMz%2FMDAxNTI2NTY0NzU5NjM2.erKcFaiePA6UmSC83iZS5_6jF5Miu51FB84o9FuXjJUg.uqLZGAcur2iYkWyybnrl6iZRtjs6ScXKqbJA0Uezp4Ug.JPEG.delishop2018%2F%25B0%25F6%25C3%25A2%25C0%25FC%25B0%25F1.JPG&type=sc960_832",
-    rating: 4.8,
-  },
-];
-
-function App() {
-  return (
-    <div>
-      {foodILike.map((dish) => (
-        <Food
-          key={dish.id}
-          name={dish.name}
-          picture={dish.image}
-          rating={dish.rating}
-        />
-      ))}
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    movies: [],
+  };
+  getMovies = async () => {
+    //axios.get하는 것은 시간이 좀 걸리기 때문에 이것이 끝날때까지 좀 기다리라고 말해야함 그래서 async를 붙인다.
+    const {
+      data: {
+        data: { movies }, //이건 axios.get해서 얻은것의 data.data.movies를 movies로 저장한다는 것임.
+      },
+    } = await axios.get(
+      "https://yts-proxy.now.sh/list_movies.json?sort_by=rating"
+    ); //주소의 api에서 data를 get하고 movies라는 상수에다가 넣어줌 await은 async랑 같이 사용하는 것으로 기다리는 대상을 지목함.
+    this.setState({ movies, isLoading: false });
+  };
+  componentDidMount() {
+    this.getMovies();
+  }
+  render() {
+    const { isLoading, movies } = this.state; //state로부터 movies를 가지고옴
+    return (
+      <section class="loader">
+        {isLoading ? (
+          <div class="loader">
+            <span class="loader__text">Loading...</span>
+          </div>
+        ) : (
+          <div class="Movies">
+            {movies.map((movie) => (
+              <Movie
+                key={movie.id}
+                id={movie.id}
+                year={movie.year}
+                title={movie.title}
+                summary={movie.summary}
+                poster={movie.medium_cover_image}
+              />
+            ))}
+          </div> //movies가 배열이니 map으로 각각의 데이터들을 <Movie />로 전달해주고 리턴해주는 값을 출력
+          //map으로는 return을 해야함
+        )}
+      </section>
+    );
+  }
 }
 
 export default App;

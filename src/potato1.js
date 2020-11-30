@@ -2,7 +2,7 @@
 // index.js에 ReactDom.render()안에를 보면
 // <>로 되어있는 것들이 전부 컴포넌트이다.
 
-// 컴포넌트는  HTML를 반환하는 함수(function)이다.
+// 컴포넌트는 HTML를 반환하는 함수(function)이다.
 // js에서 HTML을 이러한 방식으로 사용하는 것을 jsx라고 부른다.
 // 이러한 jsx는 react에만 있는 유일한 개념이다.  <APP /> 이렇게 component를 사용한다.
 
@@ -20,8 +20,8 @@ function Potato() {
 export default Potato;
 //이 컴포넌트를 다른데서 사용할 수 있게 해주려면 export해주면 됨
 //그리고 사용할 js파일에 가서 import해주고 <>로 작성해주면 됨
-// index.js에는 <APP /><Potato /> 이렇게 되어있는데 실행을 누르면 실행되지 않는다.
-//react application이 하나의 component만 rendertin하기 때문에 인접한 jsx요소를 가지게 하지 않기 때문임
+//index.js에는 <APP /><Potato /> 이렇게 되어있는데 실행을 누르면 실행되지 않는다.
+//react application이 하나의 component만 rendering하기 때문에 인접한 jsx요소를 가지게 하지 않기 때문임
 //그래서 실행을 하게 되면 오류가 날 수 밖에 없다.
 //이러한 문제점을 해결하기 위해서
 //Potato를 App안에 넣어주면 됨 그리고 App에서 Potato를 사용하면 됨
