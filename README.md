@@ -58,3 +58,35 @@ state는 보통 동적데이터와 함께 작업할 때 만들어진다.
 클래스형 컴포넌트가 state이다
 
 일단 state는 객체이다. 
+
+state를 절대 직접 변경하면 안됨, setState()를 사용하여 접근, 변경해야함. 왜냐하면 이렇게 하면 react는 render function을 refresh하지 않기 때문이다.
+매번 state의 상태를 변경할 때 react가 render function을 호출해서 바꿔줘야함
+setState function을 설정해놓으면 react는 언제 setState를 사용해야하는지를 안다. 
+또한 view를 refresh하길 원하는걸 알고 render function을 refresh해야하는걸 안다. 
+setState는 새로운 state를 받는 것이다. 
+
+즉, 정리하자면 setState로 state를 새로 설정한다음 render function을 refresh해준다. 
+이렇게 함으로써 변경이 있는 부분만 수정이 가능하다.  이게 setState를 사용하는 이유임
+
+setState에 직접적으로 state를 사용하는것 좋지 않음 
+대신 함수를 사용하여 접근할 수 있음. 
+this.setState({ count: this.state.count + 1 }); 이것을
+this.setState((current) => ({ count: current.count + 1 })); 이런식으로 매개변수를 이용하여 접근할 수 있음. 
+current라는 매개변수로 현재 state가 가진 정보들을 받아 올 수 있음
+
+react component에서 사용하는 유일한 function은 render function이다.
+react class component는 render말고도 많은 것을 가지고 있다. 	
+이들은 life cycle method를 가지늗네 이것은 기본적으로 react component를 생성하고 없애는 방법이다. 
+
+component가 생성 될 때, render전에 호출되는 몇가지 function이 있다. (컴포넌트가 update될 때 호출됨)
+1) mounting() : component가 mount될 때, component가 screen에 표시될 때, component가 website에 갈 때 constructor를 호출한다. 그리고나서 render함, 그리고 componentDidMount()(component가 처음인지 아닌지 알림)
+2) updating() : component가 update될 때 됨, componentDidUpdate()는 render뒤에 나옴
+3) unmounting() : component가 죽는걸 의미함, 컴포넌트는 페이지를 바끌때, state를 사용하여 component를 교체할 때 죽기도함, render가 끝나고 나서 componentWillUnmount()가 실행된다. 
+
+
+axios fetch와 같이 js에서 data를 fetch하는 것
+axios.get("API주소"); 이런식으로 사용하고 
+시간이 오래걸리니 async/await으로 묶어줘야함
+async/await은 시간이 오래 걸리는 작업을 비동기로 기다리라고 말해주는 것.
+
+api에서 데이터를 axios든 fetch든 가져오면 state에 넣어줘야한다.(setState로) 그 후 데이터를 파일에 저장해주고 그 파일을 출력해준다.
