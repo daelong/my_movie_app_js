@@ -54,8 +54,8 @@ state는 보통 동적데이터와 함께 작업할 때 만들어진다.
 동적데이터는 props로 해결못함 그래서 필요한것이 state이다. 
 
 함수형(function) 컴포넌트 vs 클래스형 컴포넌트 
-함수형 컴포넌트보다 클래스형 컴포넌트를 쓰는 이유는 component의 data를 바꾸는게 유용해서이다.
-클래스형 컴포넌트가 state이다
+함수형 컴포넌트보다 클래스형 컴포넌트를 쓰는 이유는 클래스형 컴포넌트는 state를 사용할수 있고
+state로 component의 data를 바꾸는게 유용하기 때문에 클래스형 컴포넌트는 state를 사용할때 사용한다.
 
 일단 state는 객체이다. 
 
@@ -76,7 +76,7 @@ current라는 매개변수로 현재 state가 가진 정보들을 받아 올 수
 
 react component에서 사용하는 유일한 function은 render function이다.
 react class component는 render말고도 많은 것을 가지고 있다. 	
-이들은 life cycle method를 가지늗네 이것은 기본적으로 react component를 생성하고 없애는 방법이다. 
+이들은 life cycle method를 가지는데 이것은 기본적으로 react component를 생성하고 없애는 방법이다. 
 
 component가 생성 될 때, render전에 호출되는 몇가지 function이 있다. (컴포넌트가 update될 때 호출됨)
 1) mounting() : component가 mount될 때, component가 screen에 표시될 때, component가 website에 갈 때 constructor를 호출한다. 그리고나서 render함, 그리고 componentDidMount()(component가 처음인지 아닌지 알림)
