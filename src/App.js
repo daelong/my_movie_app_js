@@ -1,52 +1,22 @@
 import React from "react";
-import axios from "axios";
-import Movie from "./Movie";
+import { HashRouter, Route } from "react-router-dom"; // react-router-dom은 여러 종류의 라우터들이 있다. 그중 HashRouter, Route라는걸 쓰는것
+import Home from "./routes/Home";
+import About from "./routes/About";
+import Detail from "./routes/Detail";
+import Navigation from "./components/Navigation";
 
-class App extends React.Component {
-  state = {
-    isLoading: true,
-    movies: [],
-  };
-  getMovies = async () => {
-    //axios.get하는 것은 시간이 좀 걸리기 때문에 이것이 끝날때까지 좀 기다리라고 말해야함 그래서 async를 붙인다.
-    const {
-      data: {
-        data: { movies }, //이건 axios.get해서 얻은것의 data.data.movies를 movies로 저장한다는 것임.
-      },
-    } = await axios.get(
-      "https://yts-proxy.now.sh/list_movies.json?sort_by=rating"
-    ); //주소의 api에서 data를 get하고 movies라는 상수에다가 넣어줌 await은 async랑 같이 사용하는 것으로 기다리는 대상을 지목함.
-    this.setState({ movies, isLoading: false });
-  };
-  componentDidMount() {
-    this.getMovies();
-  }
-  render() {
-    const { isLoading, movies } = this.state; //state로부터 movies를 가지고옴
-    return (
-      <section class="loader">
-        {isLoading ? (
-          <div class="loader">
-            <span class="loader__text">Loading...</span>
-          </div>
-        ) : (
-          <div class="Movies">
-            {movies.map((movie) => (
-              <Movie
-                key={movie.id}
-                id={movie.id}
-                year={movie.year}
-                title={movie.title}
-                summary={movie.summary}
-                poster={movie.medium_cover_image}
-              />
-            ))}
-          </div> //movies가 배열이니 map으로 각각의 데이터들을 <Movie />로 전달해주고 리턴해주는 값을 출력
-          //map으로는 return을 해야함
-        )}
-      </section>
-    );
-  }
+function App() {
+  //HashRouter를 리턴해주고 HashRouter안에 Route를 넣어줌. Route안에는 렌더링할 스크린과 무엇을 할지를 정하는 prop을 넣어줌
+  //Route로 /about경로로 가면 About 컴포넌트를 보여주게됨
+  // exact={true}는 라우터가 컴포넌트 두개를 겹쳐서 읽는것을 방지할때 사용, exact={true}가 적힌 route에선 오직 path에 적힌것만 경로 이동할 수 있음
+  return (
+    <HashRouter>
+      <Navigation />
+      <Route paht="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/movie-detail" component={Detail} />
+    </HashRouter>
+  );
 }
 
 export default App;
